@@ -10,4 +10,4 @@ $config = ORMSetup::createAttributeMetadataConfiguration($entity_path, $isDevMod
 
 $connection = DriverManager::getConnection($dbParams, $config);
 $entityManager = new EntityManager($connection, $config);
-//return $entityManager;
+return $entityManager;
