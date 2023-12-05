@@ -1,6 +1,7 @@
 <?php
 
 namespace catadoct\catalog\domain\entities;
+use catadoct\catalog\domain\Repository\TailleRepository;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping\Table;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\OneToMany;
 
-#[Entity]
+#[Entity(repositoryClass: TailleRepository::class)]
 #[Table(name: "taille")]
 class Taille
 {

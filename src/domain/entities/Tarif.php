@@ -1,6 +1,7 @@
 <?php
 
 namespace catadoct\catalog\domain\entities;
+use catadoct\catalog\domain\Repository\TarifRepository;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -10,7 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\JoinColumn;
 
-#[Entity]
+#[Entity(repositoryClass: TarifRepository::class)]
 #[Table(name: "tarif")]
 class Tarif
 {

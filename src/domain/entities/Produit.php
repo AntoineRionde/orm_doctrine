@@ -3,6 +3,7 @@
 
 namespace catadoct\catalog\domain\entities;
 
+use catadoct\catalog\domain\Repository\ProduitRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
@@ -15,7 +16,7 @@ use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\Tests\ORM\Tools\Pagination\Category;
 
-#[Entity]
+#[Entity(repositoryClass: ProduitRepository::class)]
 #[Table(name: "produit")]
 class Produit {
 
