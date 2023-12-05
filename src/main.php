@@ -48,9 +48,29 @@ $entityManager->flush();
 
 // Exercice 2 : requêtes
 // question 1 : afficher le produit dont le numéro est 4
-$produit = $produitRepository->matching(Criteria::create()->where(Criteria::expr()->contains("numero", 4)));
+$produit = $produitRepository->findOneBy(['numero' => 4]);
 echo $produit->getLibelle();
 
 // question 2 : afficher le produit numéro 5 et de libelleé 'Pepperoni' s'il existe
 $produit = $produitRepository->findOneBy(['numero' => 5, 'libelle' => 'Pepperoni']);
 echo $produit->getLibelle();
+
+// question 3 : Afficher la catégorie de libellé 'Boissons' ainsi que les produits de cette catégorie
+$categorie = $categorieRepository->findOneBy(['libelle' => 'Boissons']);
+echo $categorie->getLibelle();
+$produits = $categorie->getProduits();
+foreach ($produits as $produit) {
+    echo $produit->getLibelle();
+}
+
+// question 4
+$produits = $produitRepository->findProductsByKeyword('mozzarella');
+foreach ($produits as $produit) {
+    echo $produit->getLibelle();
+}
+
+// question 5 :  afficher les produits de la catégorie 5 contenant 'jambon' dans la description
+$produits = $produitRepository->findProductsByKeyword('jambon')->matching(Criteria::create()->where(Criteria::expr()->eq('categorie', 5)));
+foreach ($produits as $produit) {
+    echo $produit->getLibelle();
+}

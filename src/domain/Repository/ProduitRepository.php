@@ -13,4 +13,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProduitRepository extends EntityRepository
 {
+    function findProductsByKeyword($keyword)
+    {
+        $produits = $this->matching(
+            Criteria::create()
+                ->where(Criteria::expr()->contains("description", $keyword))
+        );
+        return $produits;
+    }
 }
