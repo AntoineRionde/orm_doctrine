@@ -6,9 +6,11 @@ use Doctrine\ORM\ORMSetup;
 
 $entity_path = [__DIR__ . '/../domain/entities/'];
 $isDevMode=true;
-$dbParams = parse_ini_file(__DIR__ . '/../config/config.ini');
-$config = ORMSetup::createAttributeMetadataConfiguration($entity_path, $isDevMode);
 
+$dbParams = parse_ini_file(__DIR__ . '/../config/config.ini');
+
+$config = ORMSetup::createAttributeMetadataConfiguration($entity_path, $isDevMode);
 $connection = DriverManager::getConnection($dbParams, $config);
 $entityManager = new EntityManager($connection, $config);
+
 return $entityManager;

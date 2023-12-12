@@ -3,7 +3,7 @@
 
 namespace catadoct\catalog\domain\entities;
 
-use catadoct\catalog\domain\Repository\ProduitRepository;
+use catadoct\catalog\domain\repository\ProduitRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
@@ -14,7 +14,6 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
-use Doctrine\Tests\ORM\Tools\Pagination\Category;
 
 #[Entity(repositoryClass: ProduitRepository::class)]
 #[Table(name: "produit")]
@@ -23,24 +22,24 @@ class Produit {
     #[Id]
     #[Column(type: Types::INTEGER)]
     #[GeneratedValue(strategy: "AUTO")]
-    private int $id;
+    public int $id;
 
     #[Column(type: Types::INTEGER)]
-    private int $numero;
+    public int $numero;
 
     #[Column(type: Types::STRING)]
-    private string $libelle;
+    public string $libelle;
+
+    #[Column(type: Types::TEXT)]
+    public string $description;
 
     #[Column(type: Types::STRING)]
-    private string $description;
-
-    #[Column(type: Types::STRING)]
-    private string $image;
+    public string $image;
 
     #[ManyToOne(targetEntity: Categorie::class)]
     #[JoinColumn(name: "categorie_id", referencedColumnName: "id")]
-    private ?Category $categorie;
+    public ?Categorie $categorie;
 
-    #[OneToMany(targetEntity: Tarif::class, mappedBy: "produit")]
-    private Collection $tarifs;
+    #[OneToMany(mappedBy: "produit", targetEntity: Tarif::class)]
+    public Collection $tarifs;
 }

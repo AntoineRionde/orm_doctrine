@@ -1,8 +1,9 @@
 <?php
 
-namespace catadoct\catalog\domain\Repository;
+namespace catadoct\catalog\domain\repository;
 
 use catadoct\catalog\domain\entities\Produit;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 
 /**

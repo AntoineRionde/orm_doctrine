@@ -1,14 +1,16 @@
-version: '1'
+version: '3'
 networks:
     micro-orm.net:
       driver: bridge
+
 services:
   micro-orm.php:
     image: 'canals/php:latest'
+    env_file: ./src/config/.env
     ports:
       - '2080:80'
     volumes:
-      - ../:/var/www
+      - ./:/var/www
     working_dir: /var/www/
     networks:
       - micro-orm.net
@@ -25,7 +27,6 @@ services:
 
   micro-orm.adminer:
     image: adminer
-    command: php -S 0.0.0.0:8080 -t /var/www/html
     ports:
       - '8082:8080'
     networks:

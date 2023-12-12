@@ -1,7 +1,7 @@
 <?php
 
 namespace catadoct\catalog\domain\entities;
-use catadoct\catalog\domain\Repository\CategorieRepository;
+use catadoct\catalog\domain\repository\CategorieRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -12,18 +12,18 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\OneToMany;
 
 #[Entity(repositoryClass: CategorieRepository::class)]
-#[Table(name: "taille")]
+#[Table(name: "categorie")]
 class Categorie
 {
     #[Id]
     #[GeneratedValue]
     #[Column(name: "id", type: Types::INTEGER)]
-    private int $id;
+    public int $id;
 
 
     #[Column(name: "libelle", type: Types::STRING)]
-    private string $libelle;
+    public string $libelle;
 
     #[OneToMany(targetEntity: Produit::class, mappedBy: "categorie")]
-    private Collection $produits;
+    public Collection $produits;
 }

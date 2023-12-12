@@ -1,7 +1,8 @@
 <?php
 
 namespace catadoct\catalog\domain\entities;
-use catadoct\catalog\domain\Repository\TailleRepository;
+use catadoct\catalog\domain\repository\TailleRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -17,11 +18,11 @@ class Taille
     #[Id]
     #[GeneratedValue]
     #[Column(name: "id", type: Types::INTEGER)]
-    private int $id;
+    public int $id;
 
     #[Column(name: "libelle", type: Types::STRING)]
-    private string $libelle;
+    public string $libelle;
 
     #[OneToMany(targetEntity: Tarif::class, mappedBy: "taille")]
-    private Collection $tarifs;
+    public Collection $tarifs;
 }

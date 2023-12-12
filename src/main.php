@@ -1,12 +1,14 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$entityManager = require_once __DIR__ . '/../src/manager/manager.php';
-
+use catadoct\catalog\domain\entities\Categorie;
+use catadoct\catalog\domain\entities\Produit;
 use Doctrine\Common\Collections\Criteria;
 
+$entityManager = require_once __DIR__ . '/../src/manager/manager.php';
+
 // question 1
-$produitRepository = $entityManager->getRepository('catadoct\catalog\domain\entities\Produit');
+$produitRepository = $entityManager->getRepository(Produit::class);
 $produit = $produitRepository->find(4);
 echo $produit->getNumero();
 echo $produit->getLibelle();
@@ -14,7 +16,7 @@ echo $produit->getDescription();
 echo $produit->getImage();
 
 // question 2
-$categorieRepository = $entityManager->getRepository('catadoct\catalog\domain\entities\Categorie');
+$categorieRepository = $entityManager->getRepository(Categorie::class);
 $categorie = $categorieRepository->find(5);
 echo $categorie->getLibelle();
 
@@ -45,32 +47,3 @@ $entityManager->flush();
 // question 7 : Supprimer ce produit de la base
 $entityManager->remove($produit);
 $entityManager->flush();
-
-// Exercice 2 : requêtes
-// question 1 : afficher le produit dont le numéro est 4
-$produit = $produitRepository->findOneBy(['numero' => 4]);
-echo $produit->getLibelle();
-
-// question 2 : afficher le produit numéro 5 et de libelleé 'Pepperoni' s'il existe
-$produit = $produitRepository->findOneBy(['numero' => 5, 'libelle' => 'Pepperoni']);
-echo $produit->getLibelle();
-
-// question 3 : Afficher la catégorie de libellé 'Boissons' ainsi que les produits de cette catégorie
-$categorie = $categorieRepository->findOneBy(['libelle' => 'Boissons']);
-echo $categorie->getLibelle();
-$produits = $categorie->getProduits();
-foreach ($produits as $produit) {
-    echo $produit->getLibelle();
-}
-
-// question 4
-$produits = $produitRepository->findProductsByKeyword('mozzarella');
-foreach ($produits as $produit) {
-    echo $produit->getLibelle();
-}
-
-// question 5 :  afficher les produits de la catégorie 5 contenant 'jambon' dans la description
-$produits = $produitRepository->findProductsByKeyword('jambon')->matching(Criteria::create()->where(Criteria::expr()->eq('categorie', 5)));
-foreach ($produits as $produit) {
-    echo $produit->getLibelle();
-}

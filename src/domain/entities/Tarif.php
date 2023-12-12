@@ -1,7 +1,8 @@
 <?php
 
 namespace catadoct\catalog\domain\entities;
-use catadoct\catalog\domain\Repository\TarifRepository;
+use catadoct\catalog\domain\repository\TarifRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -18,17 +19,17 @@ class Tarif
     #[Id]
     #[GeneratedValue]
     #[Column(name: "id", type: Types::INTEGER)]
-    private int $id;
+    public int $id;
 
 
     #[Column(name: "tarif", type: Types::FLOAT)]
-    private float $tarif;
+    public float $tarif;
 
     #[ManyToOne(targetEntity: Taille::class)]
     #[JoinColumn(name: "taille_id", referencedColumnName: "id")]
-    private ?Taille $taille;
+    public ?Taille $taille;
 
     #[ManyToOne(targetEntity: Produit::class)]
     #[JoinColumn(name: "produit_id", referencedColumnName: "id")]
-    private ?Produit $produit;
+    public ?Produit $produit;
 }

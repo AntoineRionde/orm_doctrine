@@ -1,6 +1,6 @@
 <?php
 
-namespace catadoct\catalog\domain\Repository;
+namespace catadoct\catalog\domain\repository;
 
 use catadoct\catalog\domain\entities\Tarif;
 use Doctrine\ORM\EntityRepository;
