@@ -3,7 +3,6 @@
 namespace catadoct\catalog\domain\repository;
 
 use catadoct\catalog\domain\entities\Produit;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -14,12 +13,48 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProduitRepository extends EntityRepository
 {
-    function findProductsByKeyword($keyword)
+    private string $path = "\\catadoct\\catalog\\domain\\entities\\Produit";
+
+    public function findProducts(): array
     {
-        $produits = $this->matching(
-            Criteria::create()
-                ->where(Criteria::expr()->contains("description", $keyword))
-        );
-        return $produits;
+        $dql = "SELECT p, t FROM $this->path p
+                JOIN p.tarifs t";
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
+
+    public function findByKeyword(string $keyword): array
+    {
+        $dql = "SELECT p FROM $this->path p
+                WHERE p.libelle LIKE :keyword
+                OR p.description LIKE :keyword";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('keyword', "%$keyword%");
+        return $query->getResult();
+    }
+
+    public function findByLowerPrice(float $price): array
+    {
+        $dql = "SELECT p, t FROM $this->path p
+                JOIN p.tarifs t
+                WHERE t.tarif <= :price
+                ORDER BY p.numero ASC";
+
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('price', $price);
+        return $query->getResult();
+    }
+
+    public function findByNumberAndSize(int $number, string $size) : array {
+        $dql = "SELECT p, t, ta FROM $this->path p
+                JOIN p.tarifs t
+                JOIN t.taille ta
+                WHERE p.numero = :number
+                AND ta.libelle = :size";
+
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('number', $number);
+        $query->setParameter('size', $size);
+        return $query->getResult();
     }
 }
